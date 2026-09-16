@@ -31,13 +31,9 @@ export default function ConnectionError({ message }: { message: string }) {
           Trying to reach: <strong>{API_BASE_URL}</strong>
           <br />
           <br />
-          1. Open a terminal in the <strong>backend</strong> folder
-          <br />
-          2. Run <strong>npm install</strong> (first time only)
-          <br />
-          3. Run <strong>npm run dev</strong>
-          <br />
-          4. Confirm you see &quot;MongoDB connected&quot; and &quot;API running on port 5000&quot;
+          Check that the backend Render service is running and that its
+          <strong> MONGO_URI</strong> and <strong>CLIENT_ORIGIN</strong> environment
+          variables are configured.
         </div>
 
         <button className="btn-primary" onClick={retryConnection}>

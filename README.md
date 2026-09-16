@@ -57,32 +57,28 @@ npm run dev                 # starts the app on http://localhost:5173
 Log in with the seeded demo account, or click **Sign up** to create your own
 account (a starter project with live data is generated automatically).
 
-## 3. Deployment
+## 3. Deployment on Render
 
-Deploy the `frontend` folder as a Vercel project:
+The root `render.yaml` defines both services in one Render project:
 
-- Set the Vercel **Root Directory** to `frontend`.
-- Use `npm run build` as the build command. Vercel detects `dist` as the output directory.
-- Add `VITE_API_URL` with the public URL of the deployed backend, including `/api`, for example `https://api.example.com/api`.
+- `flowly-backend` is a Node web service running `npm start` from `backend`.
+- `flowly-frontend` is a static site built from `frontend` and served from `dist`.
 
-Deploy the `backend` folder as a second Vercel project. Vercel will run the
-Express API through `backend/api/[...path].js`. Set these backend environment
-variables in the Vercel project:
+In Render, choose **New > Blueprint**, connect this repository, and apply the
+`render.yaml` file. Set the backend `MONGO_URI` when Render prompts for it.
+`JWT_SECRET` is generated automatically. The frontend uses
+`https://flowly-backend.onrender.com/api` and the backend allows
+`https://flowly-frontend.onrender.com` by default.
+
+If Render assigns different service names or domains, update these environment
+variables in the same Render project and redeploy both services:
 
 ```text
-MONGO_URI=<MongoDB Atlas connection string>
-JWT_SECRET=<long random secret>
-JWT_EXPIRES_IN=7d
-CLIENT_ORIGIN=https://<your-vercel-domain>
-PORT=<provided by the host, if required>
+CLIENT_ORIGIN=https://<actual-frontend>.onrender.com
+VITE_API_URL=https://<actual-backend>.onrender.com/api
 ```
 
-Add `MONGO_URI`, `JWT_SECRET`, and the other variables under the backend Vercel
-project's Environment Variables. In the frontend Vercel project, set
-`VITE_API_URL` to the backend Vercel URL followed by `/api`, for example
-`https://flowly-api.vercel.app/api`. Add the backend Vercel URL's outbound IP
-access in MongoDB Atlas Network Access, and make sure the frontend's Vercel
-domain is allowed by `CLIENT_ORIGIN`.
+Add the backend service's database access in MongoDB Atlas Network Access.
 
 ## How the data stays dynamic
 
