@@ -8,7 +8,7 @@ const projectRoutes = require("./src/routes/projectRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 const app = express();
-const clientOrigin = (process.env.CLIENT_ORIGIN || "http://localhost:5173").replace(/\/$/, "");
+const clientOrigin = (process.env.CLIENT_ORIGIN).replace(/\/$/, "");
 
 app.use(
   cors({
