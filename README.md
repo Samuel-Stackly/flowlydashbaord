@@ -57,6 +57,33 @@ npm run dev                 # starts the app on http://localhost:5173
 Log in with the seeded demo account, or click **Sign up** to create your own
 account (a starter project with live data is generated automatically).
 
+## 3. Deployment
+
+Deploy the `frontend` folder as a Vercel project:
+
+- Set the Vercel **Root Directory** to `frontend`.
+- Use `npm run build` as the build command. Vercel detects `dist` as the output directory.
+- Add `VITE_API_URL` with the public URL of the deployed backend, including `/api`, for example `https://api.example.com/api`.
+
+Deploy the `backend` folder as a second Vercel project. Vercel will run the
+Express API through `backend/api/[...path].js`. Set these backend environment
+variables in the Vercel project:
+
+```text
+MONGO_URI=<MongoDB Atlas connection string>
+JWT_SECRET=<long random secret>
+JWT_EXPIRES_IN=7d
+CLIENT_ORIGIN=https://<your-vercel-domain>
+PORT=<provided by the host, if required>
+```
+
+Add `MONGO_URI`, `JWT_SECRET`, and the other variables under the backend Vercel
+project's Environment Variables. In the frontend Vercel project, set
+`VITE_API_URL` to the backend Vercel URL followed by `/api`, for example
+`https://flowly-api.vercel.app/api`. Add the backend Vercel URL's outbound IP
+access in MongoDB Atlas Network Access, and make sure the frontend's Vercel
+domain is allowed by `CLIENT_ORIGIN`.
+
 ## How the data stays dynamic
 
 - Every dashboard number lives in MongoDB (`Metric`, `RevenuePoint`,

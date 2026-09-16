@@ -31,13 +31,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Server error", error: err.message });
 });
 
-const PORT = process.env.PORT || 5000;
+module.exports = app;
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => console.log(`[server] Flowly API running on port ${PORT}`));
-  })
-  .catch((err) => {
-    console.error(err.message);
-    process.exitCode = 1;
-  });
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => console.log(`[server] Flowly API running on port ${PORT}`));
+    })
+    .catch((err) => {
+      console.error(err.message);
+      process.exitCode = 1;
+    });
+}
