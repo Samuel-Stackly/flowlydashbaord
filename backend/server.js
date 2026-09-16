@@ -17,6 +17,8 @@ app.use(
 );
 app.use(express.json());
 
+app.get("/", (req, res) => res.json({ status: "ok", service: "flowly-api" }));
+app.get("/api", (req, res) => res.json({ status: "ok", service: "flowly-api" }));
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 app.use("/api/auth", authRoutes);
