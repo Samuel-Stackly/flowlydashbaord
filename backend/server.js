@@ -8,10 +8,11 @@ const projectRoutes = require("./src/routes/projectRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 const app = express();
+const clientOrigin = (process.env.CLIENT_ORIGIN || "http://localhost:5173").replace(/\/$/, "");
 
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+    origin: clientOrigin,
     credentials: true,
   })
 );
