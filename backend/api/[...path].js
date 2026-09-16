@@ -4,6 +4,12 @@ const connectDB = require("../src/config/db");
 let databaseConnection;
 
 module.exports = async (req, res) => {
+  // Vercel removes the /api function prefix before invoking this handler,
+  // while the Express routes are defined with /api prefixes.
+  if (!req.url.startsWith("/api")) {
+    req.url = `/api${req.url.startsWith("/") ? req.url : `/${req.url}`}`;
+  }
+
   try {
     databaseConnection ||= connectDB();
     await databaseConnection;
